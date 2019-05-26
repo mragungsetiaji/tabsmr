@@ -9,12 +9,16 @@ class TabsMR(object):
         self.rawdata = None
         self.access_granted = False # digunakan untuk verify api
         self.access_message = None
+        self.bucket_name = None
+
+        self.registered_rawdata = False
 
     def credentials(self, certificate):
         """
         certificate = {
             "account_type": "tabulation",
-            "project_id": "clientname-project",
+            "client":"clientname",
+            "project_id": "project_id",
             "private_key_id": "a4a9f3c7600081ea9bad46ece1b158e2f16454e2",
             "user_email": "blablabla@gmail.com",
             "user_id": "101670599119528512817",
@@ -47,12 +51,19 @@ class TabsMR(object):
         else:
             self.access_message = "Your access credentials is denied, Please recheck your key!"
 
-    def register_rawdata(self, rawdata):
+    def do_register_rawdata(self, csv_path):
         """
         register rawdata ke google storage bucket
         """
-
-        gcs.Bucket('bucket-name').item('to/data.csv').write_to(simple_dataframe.to_csv(),'text/csv')
+        if self.registered_rawdata == False:
+    ¸       a = pd.read_csv(csv_path)
+            gcs.Bucket(self.bucket_name).item(certificate["clientname"]+"/dataset_"+certificate["project_id"] +".csv")\
+                                        .write_to(a.to_csv(),'text/csv')
+            self.registered_rawdata == True
+            print("Your rawdata is already registered")
+        else:
+            print("Your rawdata is already registered")
+        
         return None
 
     def register_spec(self, spec)
